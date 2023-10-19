@@ -88,7 +88,7 @@
         <template v-else-if="game_over">
           <div class="stage w-full h-full max-h-[43em] relative sm:pt-4 py-1 flex flex-col game_over">
             <p class="text-white sm:text-[2.5em] px-4 sm:px-8 font-extrabold leading-[0.9]">
-              К сожалению, вам не удалось достичь оценки в<span class="text-lime-400">&nbsp;$1&nbsp;млн</span>
+              К сожалению, вам не удалось достичь оценки в<span class="text-lime-400">&nbsp;$1&nbsp;млрд.</span>
             </p>
             <img src='/assets/images/game_over.png' alt="Game over!" />
             <div class="p-2 sm:p-5 mx-4 sm:mx-8 mb-3 bg-lime-400 rounded-[0.625em] flex-col justify-center items-center gap-0.5 inline-flex min-h-[2.6em] sm:min-h-[4em] cursor-pointer" @click="currentStage = stages[0]; game_over = false; balance = defaultBalance">
@@ -166,7 +166,7 @@ export default {
       if (effect) {
         switch (effect) {
           case "end":
-            if (this.balance <= 1000000) return this.game_over = true
+            if (this.balance <= 1000000000) return this.game_over = true
             return this.win = true
         }
       }
