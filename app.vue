@@ -80,7 +80,7 @@
             </div>
             <img src='/assets/images/win.png' alt="You win!" />
             <p class="text-white text-xs sm:text-[1.25em] px-3 sm:px-8 font-light sm:font-medium leading-[0.9] mb-2 sm:mb-3">Хотите найти более быстрый способ победить? Локализуйтесь в <span class="text-lime-400 font-medium sm:font-bold">Коворкинге 2.0</span>.<br/><br/>Это не только рабочие места для вашей команды, но и доступ к комьюнити, нетворкинг и возможности резидента “Сколково”для вашего проекта! Записать вас на бесплатный тестовый день?</p>
-            <a href="https://hackspace.sk.ru/?utm_source=Game_IN&utm_medium=none&utm_campaign=win" target="_blank" class="p-2 sm:p-5 mx-4 sm:mx-8 mb-1 bg-pink-600 rounded-[0.625em] flex-col justify-center items-center gap-0.5 inline-flex min-h-[3em] sm:min-h-[4em] mt-auto">
+            <a href="https://coworking.sk.ru/?utm_source=Game_IN&utm_medium=none&utm_campaign=win" target="_blank" class="p-2 sm:p-5 mx-4 sm:mx-8 mb-1 bg-pink-600 rounded-[0.625em] flex-col justify-center items-center gap-0.5 inline-flex min-h-[3em] sm:min-h-[4em] mt-auto">
               <p class="text-white sm:text-[1.625em] font-medium sm:font-semibold leading-none">Записаться на тестовый день?</p>
             </a>
           </div>
@@ -96,7 +96,7 @@
             </div>
             <p class="text-white text-sm sm:text-[1.25em] font-light sm:font-medium leading-[0.9] px-3 sm:pl-8 sm:pr-10 mb-3 sm:mt-3 sm:mb-6">Не расстраивайтесь! Чтобы получить больше возможностей для развития стартапов, приходите на тестовый день в <span class="text-lime-400">Коворкинг 2.0</span>.<br/><br/>У нас можно не просто работать над проектом, но и&nbsp;найти полезные связи, учиться, посещать бизнес-мероприятия — и&nbsp;не&nbsp;только!</p>
 
-            <a href="https://hackspace.sk.ru/?utm_source=Game_IN&utm_medium=none&utm_campaign=lose" target="_blank" class="p-2 sm:p-5 mx-4 sm:mx-8 mb-1 bg-pink-600 rounded-[0.625em] flex-col justify-center items-center gap-0.5 inline-flex min-h-[2.6em] sm:min-h-[4em]">
+            <a href="https://coworking.sk.ru/?utm_source=Game_IN&utm_medium=none&utm_campaign=lose" target="_blank" class="p-2 sm:p-5 mx-4 sm:mx-8 mb-1 bg-pink-600 rounded-[0.625em] flex-col justify-center items-center gap-0.5 inline-flex min-h-[2.6em] sm:min-h-[4em]">
               <p class="text-white sm:text-[1.625em] font-medium sm:font-semibold leading-none">Записаться на тестовый день?</p>
             </a>
           </div>
@@ -118,6 +118,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     let glitchInterval1, glitchInterval2
@@ -162,16 +163,29 @@ export default {
     },
     changeStep(step, delta, effect = false) {
       this.balance += delta
-      if (this.balance <= 0) return this.game_over = true
+      if (this.balance <= 0) {
+        return this.gameOver()
+      }
       if (effect) {
         switch (effect) {
           case "end":
-            if (this.balance <= 1000000000) return this.game_over = true
+            if (this.balance <= 1000000000) return this.gameOver()
+            this.sendYandexMetrikaEvent('win')
             return this.win = true
         }
       }
       this.currentStage = this.stages[this.currentStage.n + step]
-    }
+    },
+    gameOver() {
+      this.sendYandexMetrikaEvent('game_over')
+      return this.game_over = true
+    },
+    /**
+    * @param {string} eventName
+    */
+    sendYandexMetrikaEvent(eventName) {
+      this.$ym('reachGoal', eventName);
+    },
   },
   watch: {
     // whenever question changes, this function will run

@@ -34,13 +34,12 @@ export default defineNuxtConfig({
     // 'assets/css/main.css',
   ],
 
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@vueuse/nuxt', '@nuxtjs/yandex-metrika'],
-  yandexMetrika: {
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@vueuse/nuxt', ['yandex-metrika-module-nuxt3', {
     id: '95292036',
     clickmap:true,
     trackLinks:true,
     accurateTrackBounce:true,
     webvisor:true
-  }
+  }]],
   // spaLoadingTemplate: false
 })

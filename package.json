@@ -21,6 +21,6 @@
     "tailwindcss": "^3.3.2"
   },
   "dependencies": {
-    "@nuxtjs/yandex-metrika": "^1.4.0"
+    "yandex-metrika-module-nuxt3": "^1.5.3"
   }
 }
